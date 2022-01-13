@@ -100,7 +100,7 @@ def get_session():
 
 def get_sku_title():
     """获取商品名称"""
-    url = 'https://item.jd.com/{}.html'.format(global_config.getRaw('config', 'sku_id'))
+    url = 'https://item.jd.com/{}.html'.format(global_config.getRaw('happy_cat_config', 'sku_id'))
     session = get_session()
     resp = session.get(url).content
     x_data = etree.HTML(resp)
@@ -116,6 +116,6 @@ def send_wechat(message):
         "desp": message
     }
     headers = {
-        'User-Agent': global_config.getRaw('config', 'DEFAULT_USER_AGENT')
+        'User-Agent': global_config.getRaw('happy_cat_config', 'DEFAULT_USER_AGENT')
     }
     requests.get(url, params=payload, headers=headers)

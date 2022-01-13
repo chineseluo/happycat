@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+        <title>快乐喵正在嗅探中。。。</title>
+    </head>
+    <body>
+        <div id="info">happy_cat</div>
+        <hr>
+        <div id="eid"></div>
+        <div id="fp"></div>
+    </body>
+</html>
+
+<script src="https://gias.jd.com/js/td.js"></script>
+
+<script>
+    setTimeout(function () {
+        try {
+            getJdEid(function (eid, fp, udfp) {
+                document.getElementById('info').innerText = '快乐喵提示：请将下列配置填入 config.ini 中的对应位置';
+                document.getElementById('eid').innerText = 'eid = ' + eid;
+                document.getElementById('fp').innerText = 'fp = ' + fp;
+            });
+        } catch (e) {
+            document.getElementById('info').innerText = e;
+        }
+    }, 1000);
+</script>

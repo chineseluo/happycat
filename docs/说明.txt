@@ -5,3 +5,5 @@ var fp = $('#fp').val();
 var trackId = getTakId();
 var riskControl = $('#riskControl').val();
 console.log(`eid = ${eid}\nfp = ${fp}\ntrack_id = ${trackId}\nrisk_control = ${riskControl}`);
+
+如何获取sku_id，点击你需要的商品，url上会有sku_id信息，例如：https://item.jd.com/69908843806.html，69908843806 便是sku_id

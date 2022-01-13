@@ -4,8 +4,10 @@ import json
 import functools
 import warnings
 import random
+import pandas as pd
 from loguru import logger
-from config.user_agent import USER_AGENTS
+from time import strftime
+from happy_cat_config.user_agent import USER_AGENTS
 
 
 class Util:
@@ -146,3 +148,31 @@ class Util:
         :return: UserAgent字符串
         """
         return random.choice(USER_AGENTS)
+
+    @staticmethod
+    def save_to_csv(dealtime, number, vercode, amount):
+        """
+        写入内容到csv
+        """
+        file_path = strftime("../快乐喵收集信息_%Y_%m_%d.csv")  # 按照当前系统时间创建文件
+
+        # 判断文件是否存在
+        if os.path.exists(file_path):
+            logger.info("快乐喵收集信息文件存在，写入数据")
+            data = pd.DataFrame({'下单时间': dealtime, '订单号': number, '验证码': vercode, '实付金额': amount}, index=[0])
+            data.to_csv(file_path, index=None, mode='a', header=None)
+            logger.info(f'快乐喵信息记录文件：{file_path}')
+        else:
+            logger.info("快乐喵收集信息文件不存在，创建文件后，写入数据")
+            data = pd.DataFrame({'下单时间': dealtime, '订单号': number, '验证码': vercode, '实付金额': amount}, index=[0])
+            data.to_csv(file_path, index=None)
+            logger.info(f'快乐喵信息记录文件：{file_path}')
+
+
+if __name__ == '__main__':
+    time = ['2021-09-07 08:22:05']
+    number = ['221697592258']
+    vercode = ['7102298241802']
+    amount = ['248.00']
+    u = Util()
+    u.save_to_csv(time, number, vercode, amount)

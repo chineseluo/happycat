@@ -151,7 +151,9 @@ class JdSeckill(object):
             self.wati_some_time()
         # 响应中包含了许多用户信息，现在在其中返回昵称
         # jQuery2381773({"imgUrl":"//storage.360buyimg.com/i.imageUpload/xxx.jpg","lastLoginTime":"","nickName":"xxx","plusStatus":"0","realName":"xxx","userLevel":x,"userScoreVO":{"accountScore":xx,"activityScore":xx,"consumptionScore":xxxxx,"default":false,"financeScore":xxx,"pin":"xxx","riskScore":x,"totalScore":xxxxx}})
-        return parse_json(resp.text).get('nickName')
+        username = parse_json(resp.text).get('nickName')
+        logger.info(f'快乐喵获取用户名：{username}')
+        return username
 
     def get_seckill_url(self):
         """获取商品的抢购链接
@@ -281,8 +283,8 @@ class JdSeckill(object):
             'areaCode': '',
             'overseas': 0,
             'phone': '',
-            'eid': global_config.getRaw('config', 'eid'),
-            'fp': global_config.getRaw('config', 'fp'),
+            'eid': global_config.getRaw('happy_cat_config', 'eid'),
+            'fp': global_config.getRaw('happy_cat_config', 'fp'),
             'token': token,
             'pru': ''
         }
@@ -340,3 +342,4 @@ class JdSeckill(object):
 if __name__ == '__main__':
     jd = JdSeckill()
     jd.login()
+    jd.get_username()
