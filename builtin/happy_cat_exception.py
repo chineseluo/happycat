@@ -3,6 +3,9 @@ class HappyCatException(Exception):
 
 
 class HappyCatDecryptException(HappyCatException):
+    """
+    解密异常
+    """
     ...
 
 
@@ -19,6 +22,10 @@ class HappyCatDecryptFileNotFoundException(HappyCatException):
 
 
 class HappyCatLoginException(HappyCatException):
+    ...
+
+
+class HappyCatAddGoodsToShoppingCarException(HappyCatException):
     ...
 
 

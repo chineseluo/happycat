@@ -5,7 +5,7 @@ from builtin.happy_cat_exception import HappyCatDecryptFileNotFoundException
 
 
 class Config(object):
-    def __init__(self, config_file='../config.ini'):
+    def __init__(self, config_file='config.ini'):
         self._path = os.path.join(os.getcwd(), config_file)
         logger.info(self._path)
         if not os.path.exists(self._path):

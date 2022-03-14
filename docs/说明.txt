@@ -6,4 +6,11 @@ var trackId = getTakId();
 var riskControl = $('#riskControl').val();
 console.log(`eid = ${eid}\nfp = ${fp}\ntrack_id = ${trackId}\nrisk_control = ${riskControl}`);
 
-如何获取sku_id，点击你需要的商品，url上会有sku_id信息，例如：https://item.jd.com/69908843806.html，69908843806 便是sku_id
+如何获取sku_id?
+点击你需要的商品，url上会有sku_id信息，例如：https://item.jd.com/69908843806.html，69908843806 便是sku_id
+
+如何获取riskControl value?
+在订单支付页面；按F12、在查看器页面中搜索即可eid、fp、TrackID、riskControl
+如果riskControl value没有值怎么破 - -
+填这个：VM1504:4
+在订单支付页面；按F12、在查看器页面中搜索即可eid、fp、TrackID、riskControl
