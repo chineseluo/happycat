@@ -103,9 +103,9 @@ class Util:
 
     @staticmethod
     def parse_json(s):
-        begin = s.find('{')
-        end = s.rfind('}') + 1
-        return json.loads(s[begin:end])
+        s = s.split("(")[1]
+        s = s.split(")")[0]
+        return json.loads(s)
 
     @staticmethod
     def get_tag_value(tag, key='', index=0):
@@ -253,9 +253,11 @@ class Util:
 
 
 if __name__ == '__main__':
-    time = ['2021-09-07 08:22:05']
-    number = ['221697592258']
-    vercode = ['7102298241802']
-    amount = ['248.00']
-    u = Util()
-    u.save_to_csv(time, number, vercode, amount)
+    test_str = """
+    jQuery1216615({
+   "code" : 201,
+   "msg" : "二维码未扫描，请扫描二维码"
+})
+    """
+    print(Util.parse_json(test_str))
+

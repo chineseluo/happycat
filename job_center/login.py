@@ -255,7 +255,8 @@ class Login:
         QRCode_file = 'happyCatQRCode.png'
         Util.save_image(resp, QRCode_file)
         logger.info('二维码获取成功，请打开京东APP扫描')
-        Util.open_image(QRCode_file)
+        # Util.open_image(QRCode_file)
+        Util.open_image("ui/happt_cat_QRcode.html")
         return True
 
     def _get_QRcode_ticket(self):
@@ -276,15 +277,15 @@ class Login:
         resp = self.session.get(url=url, headers=headers, params=payload)
 
         if not Util.response_status(resp):
-            logger.error('获取二维码扫描结果异常')
+            logger.error('快乐喵警告:获取二维码扫描结果异常')
             return False
-
+        logger.info(resp.text)
         resp_json = Util.parse_json(resp.text)
         if resp_json['code'] != 200:
-            logger.info('Code: %s, Message: %s', resp_json['code'], resp_json['msg'])
+            logger.info(f'快乐喵提示:二维码扫描结果状态码: {resp_json["code"]}, 扫描结果信息: {resp_json["msg"]}' )
             return None
         else:
-            logger.info('已完成手机客户端确认')
+            logger.info('快乐喵提示: 恭喜完成手机客户端确认！！！')
             return resp_json['ticket']
 
     def _validate_QRcode_ticket(self, ticket):

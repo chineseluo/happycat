@@ -14,3 +14,6 @@ console.log(`eid = ${eid}\nfp = ${fp}\ntrack_id = ${trackId}\nrisk_control = ${r
 如果riskControl value没有值怎么破 - -
 填这个：VM1504:4
 在订单支付页面；按F12、在查看器页面中搜索即可eid、fp、TrackID、riskControl
+
+待办事项
+- 二维码通过网页打开，修改背景颜色
