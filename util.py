@@ -71,6 +71,13 @@ def get_random_useragent():
     return random.choice(USER_AGENTS)
 
 
+def response_status(resp):
+    if resp.status_code != requests.codes.OK:
+        print('Status: %u, Url: %s' % (resp.status_code, resp.url))
+        return False
+    return True
+
+
 def get_cookies():
     """解析cookies内容并添加到cookiesJar"""
     manual_cookies = {}

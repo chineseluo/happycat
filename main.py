@@ -8,7 +8,7 @@ if __name__ == '__main__':
     功能列表：                                                                                
     1.预约商品
     2.秒杀抢购商品
- 
+
     """
     logger.info(a)
     login_client = Login()

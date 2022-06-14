@@ -4,7 +4,7 @@ import time
 from jd_logger import logger
 from timer import Timer
 import requests
-from util import parse_json, get_session, get_sku_title,send_wechat
+from util import parse_json, get_session, get_sku_title,send_wechat,response_status
 from config import global_config
 from concurrent.futures import ProcessPoolExecutor
 from loguru import logger
@@ -338,8 +338,38 @@ class JdSeckill(object):
                 send_wechat(error_message)
             return False
 
+    # @check_login
+    def clear_cart(self):
+        """清空购物车
+        TODO 需要手动勾选后才能进行购物车清空操作
+        包括两个请求：
+        1.选中购物车中所有的商品
+        2.批量删除
+
+        :return: 清空购物车结果 True/False
+        """
+        # 1.select all items  2.batch remove items
+        select_url = 'https://cart.jd.com/selectAllItem.action'
+        remove_url = 'https://cart.jd.com/batchRemoveSkusFromCart.action'
+        data = {
+            't': 0,
+            'outSkus': '',
+            'random': random.random(),
+        }
+        try:
+            select_resp = self.session.post(url=select_url, data=data)
+            logger.info(select_resp.text)
+            remove_resp = self.session.post(url=remove_url, data=data)
+            if (not response_status(select_resp)) or (not response_status(remove_resp)):
+                logger.error('购物车清空失败')
+                return False
+            logger.info('购物车清空成功')
+            return True
+        except Exception as e:
+            logger.error(e)
+            return False
 
 if __name__ == '__main__':
     jd = JdSeckill()
     jd.login()
-    jd.get_username()
+    jd.clear_cart()

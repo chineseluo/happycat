@@ -19,9 +19,8 @@ class Login:
         self.eid = ""
         self.fp = ""
         self.is_login = False
-        self.default_user_agent = DEFAULT_USER_AGENT#Util.get_random_useragent()
+        self.default_user_agent = DEFAULT_USER_AGENT  # Util.get_random_useragent()
         self.headers = {'User-Agent': self.default_user_agent}
-
 
     def _save_cookies(self):
         """
@@ -282,7 +281,7 @@ class Login:
         logger.info(resp.text)
         resp_json = Util.parse_json(resp.text)
         if resp_json['code'] != 200:
-            logger.info(f'快乐喵提示:二维码扫描结果状态码: {resp_json["code"]}, 扫描结果信息: {resp_json["msg"]}' )
+            logger.info(f'快乐喵提示:二维码扫描结果状态码: {resp_json["code"]}, 扫描结果信息: {resp_json["msg"]}')
             return None
         else:
             logger.info('快乐喵提示: 恭喜完成手机客户端确认！！！')
