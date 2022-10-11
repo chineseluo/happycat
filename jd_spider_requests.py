@@ -4,7 +4,7 @@ import time
 from jd_logger import logger
 from timer import Timer
 import requests
-from util import parse_json, get_session, get_sku_title,send_wechat,response_status
+from util import parse_json, get_session, get_sku_title, send_wechat, response_status
 from config import global_config
 from concurrent.futures import ProcessPoolExecutor
 from loguru import logger
@@ -325,8 +325,8 @@ class JdSeckill(object):
             total_money = resp_json.get('totalMoney')
             pay_url = 'https:' + resp_json.get('pcUrl')
             logger.info(
-                '抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}'.format(order_id,total_money,pay_url)
-                )
+                '抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}'.format(order_id, total_money, pay_url)
+            )
             if global_config.getRaw('messenger', 'enable') == 'true':
                 success_message = "抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}".format(order_id, total_money, pay_url)
                 send_wechat(success_message)
@@ -354,12 +354,15 @@ class JdSeckill(object):
         data = {
             't': 0,
             'outSkus': '',
+            "is_wp": 2,
             'random': random.random(),
         }
         try:
             select_resp = self.session.post(url=select_url, data=data)
             logger.info(select_resp.text)
             remove_resp = self.session.post(url=remove_url, data=data)
+            logger.info(remove_resp.text)
+
             if (not response_status(select_resp)) or (not response_status(remove_resp)):
                 logger.error('购物车清空失败')
                 return False
@@ -368,6 +371,7 @@ class JdSeckill(object):
         except Exception as e:
             logger.error(e)
             return False
+
 
 if __name__ == '__main__':
     jd = JdSeckill()

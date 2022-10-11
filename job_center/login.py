@@ -10,6 +10,7 @@ from config import global_config
 from builtin.happy_cat_util import Util, DEFAULT_USER_AGENT
 from builtin.happy_cat_exception import *
 from bs4 import BeautifulSoup
+from builtin.resq_resp_output import RequestOutput
 
 
 class Login:
@@ -130,6 +131,7 @@ class Login:
     def _get_login_page(self):
         url = "https://passport.jd.com/new/login.aspx"
         page = self.session.get(url, headers=self.headers)
+        RequestOutput.analyse_result("get login page", page)
         return page
 
     def _get_login_data(self):
@@ -183,7 +185,7 @@ class Login:
             'Origin': 'https://passport.jd.com',
         }
         resp = self.session.post(url=login_url, data=data, headers=headers, params=payload)
-
+        RequestOutput.analyse_result("login service", resp)
         if not Util.response_status(resp):
             logger.error('登录失败')
             return False
@@ -201,6 +203,7 @@ class Login:
             'r': random.random(),
         }
         resp = self.session.post(url, params=payload, data=data, headers=self.headers)
+        RequestOutput.analyse_result("show auth code", resp)
         if not Util.response_status(resp):
             logger.error('获取是否需要验证码失败')
             return False
@@ -248,6 +251,7 @@ class Login:
             'Referer': 'https://passport.jd.com/new/login.aspx',
         }
         resp = self.session.get(url=url, headers=headers, params=payload)
+        RequestOutput.analyse_result("login", resp)
         if not Util.response_status(resp):
             logger.info('获取二维码失败')
             return False
@@ -274,6 +278,7 @@ class Login:
             'Referer': 'https://passport.jd.com/new/login.aspx',
         }
         resp = self.session.get(url=url, headers=headers, params=payload)
+        RequestOutput.analyse_result("login code", resp)
 
         if not Util.response_status(resp):
             logger.error('快乐喵警告:获取二维码扫描结果异常')
@@ -297,6 +302,7 @@ class Login:
             'Referer': 'https://passport.jd.com/uc/login?ltype=logout',
         }
         resp = self.session.get(url=url, headers=headers, params={'t': ticket})
+        RequestOutput.analyse_result("qrCodeTicketValidation", resp)
 
         if not Util.response_status(resp):
             return False
